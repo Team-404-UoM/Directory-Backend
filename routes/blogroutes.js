@@ -15,6 +15,10 @@ router.patch('/:id', blogcontrollrs.updateBlog);
 
 router.delete('/:id', blogcontrollrs.deleteBlog);
 
+router.patch('/like/:id', blogcontrollrs.increaselike);
+
+router.patch('/unlike/:id', blogcontrollrs.decreaselike);
+
 
 
 

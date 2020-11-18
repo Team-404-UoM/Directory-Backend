@@ -46,11 +46,13 @@
 
 
  const createBlog = async(req, res, next) => {
-     const { title, image, body } = req.body;
+     const { title, image, body, like } = req.body;
      const createBlog = new Blog({
          title,
          image,
-         body
+         body,
+         like
+
      });
      try {
          await createBlog.save();
@@ -126,8 +128,43 @@
      res.status(200).json({ message: 'Deletd place.' });
 
  };
+
+ const increaselike = async(req, res) => {
+     Blog.findOne({ "_id": req.params.id }).then((result) => {
+         let currentcolor = result.color;
+         let newcolor = "info";
+         let currentlike = result.like;
+         let newlike = currentlike + 1;
+         Blog.updateOne({ "_id": req.params.id }, { $set: { like: newlike, color: newcolor } }).then(result => {
+             res.send('like update');
+         })
+     })
+ };
+
+ const decreaselike = async(req, res) => {
+     Blog.findOne({ "_id": req.params.id }).then((result) => {
+         let currentcolor = result.color;
+         let newcolor = "outline-info";
+         let currentlike = result.like;
+         if (currentlike != 0) {
+             let newlike = currentlike - 1;
+             Blog.updateOne({ "_id": req.params.id }, { $set: { like: newlike, color: newcolor } }).then(result => {
+                 res.send('like decreased');
+
+             })
+         }
+         res.send("can't decrease")
+     })
+
+ };
+
+
+
+
  exports.getBlog = getBlog;
  exports.getBlogById = getBlogById;
  exports.createBlog = createBlog;
  exports.updateBlog = updateBlog;
  exports.deleteBlog = deleteBlog;
+ exports.increaselike = increaselike;
+ exports.decreaselike = decreaselike;

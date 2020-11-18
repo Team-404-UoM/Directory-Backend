@@ -16,6 +16,15 @@ const blogSchema = new Schema({
     },
     like: {
         type: Number,
+    },
+    color: {
+        type: String,
+        default: "outline-info"
+    },
+    likestatus: {
+
+        type: Boolean,
+        default: false
     }
 
 
