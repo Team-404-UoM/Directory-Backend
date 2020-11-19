@@ -48,9 +48,10 @@ const getForumById = async(req, res, next) => {
 
 
 const createForum = async(req, res, next) => {
-    const { message } = req.body;
+    const { message, reply } = req.body;
     const createForum = new Forum({
-        message
+        message,
+        reply
     });
     try {
         await createForum.save();

@@ -4,7 +4,11 @@ const Schema = mongoose.Schema;
 const forumSchema = new Schema({
     message: {
         type: String,
-        required: true
+        //required: true
+    },
+    reply: {
+        type: []
+
     }
 
 }, { timestamps: true });
