@@ -9,7 +9,7 @@ const signUp = require('./routes/SignUp');
 const event = require('./routes/events');
 const HttpError = require('./models/httperror');
 const cors = require('cors');
-//Test comment
+
 const app = express();
 
 app.use(bodyparser.json());
