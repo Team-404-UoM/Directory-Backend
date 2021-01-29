@@ -25,6 +25,10 @@ const blogSchema = new Schema({
 
         type: Boolean,
         default: false
+    },
+    blogImage: {
+        type: String,
+
     }
 
 
