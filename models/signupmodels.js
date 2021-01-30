@@ -12,12 +12,16 @@ const signUpTemplate = new mongoose.Schema({
     },
 
     faculty:{
+        type:[],
+        required:true
+    },
+    Batch:{
         type:String,
         required:true
     },
 
     gender:{
-        type:String,
+        type: [],
         required:true
     },
     

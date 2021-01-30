@@ -4,6 +4,8 @@ const signUpTemplateCopy = require('../models/signupmodels')
 const bcrypt = require('bcrypt')
 
 router.post('/signup', async(request, response) => {
+    // https://firebase.google.com/docs/auth/admin/manage-users#create_a_user
+
     const saltPassword = await bcrypt.genSalt(10)
     const securePassword = await bcrypt.hash(request.body.password, saltPassword)
 
@@ -15,13 +17,12 @@ router.post('/signup', async(request, response) => {
         email: request.body.email,
         password: securePassword
     })
-    signedUpUser.save()
-        .then(data => {
-            response.json(data)
-        })
-        .catch(error => {
-            response.json(error)
-        })
+    try{
+        const data = await signedUpUser.save();
+        response.json(data);
+    }catch(error) {
+        response.json(error)
+    }    
 })
 
 
