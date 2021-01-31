@@ -6,6 +6,7 @@ const blogRouters = require('./routes/blogroutes');
 const forumRouters = require('./routes/forumrouters');
 const bloguploaderRouters = require('./routes/bloguploaderroutes');
 const signUp = require('./routes/SignUp');
+const questions = require('./routes/questionroutes');
 const event = require('./routes/events');
 const HttpError = require('./models/httperror');
 const cors = require('cors');
@@ -27,6 +28,7 @@ app.use('/Forum', forumRouters);
 app.use('/Bloguploader', bloguploaderRouters);
 app.use(signUp);
 app.use('/Event', event);
+app.use(questions);
 app.use(cors());
 
 app.use((req, res, next) => {
@@ -44,8 +46,13 @@ app.use((req, res, next) => {
 
 
 
+var admin = require("firebase-admin");
 
+var serviceAccount = require("./web-member-directory-firebase-adminsdk-k3swr-bf9b98c49f.json");
 
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
 
 const mongodb = 'mongodb+srv://nirasha:1CVOHXmNP8iqpaVt@cluster0.bycqq.mongodb.net/WebMemberDirectory?ssl=true&ssl_cert_reqs=CERT_NONE'
 mongoose.connect(mongodb, { useNewUrlParser: true, useUnifiedTopology: true })
