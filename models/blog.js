@@ -16,15 +16,32 @@ const blogSchema = new Schema({
     },
     like: {
         type: Number,
+        default: 0
     },
-    color: {
+    likecolor: {
         type: String,
-        default: "outline-info"
+        default: "black"
     },
     likestatus: {
 
         type: Boolean,
         default: false
+    },
+    dislike: {
+        type: Number,
+        default: 0
+    },
+    dislikecolor: {
+        type: String,
+        default: "black"
+    },
+    dislikestatus: {
+
+        type: Boolean,
+        default: false
+    },
+    categorie: {
+        type: String,
     },
     blogImage: {
         type: String,

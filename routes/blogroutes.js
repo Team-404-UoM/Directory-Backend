@@ -33,6 +33,10 @@ router.patch('/like/:id', blogcontrollrs.increaselike);
 
 router.patch('/unlike/:id', blogcontrollrs.decreaselike);
 
+router.patch('/dislike/:id', blogcontrollrs.increasedislike);
+
+router.patch('/disunlike/:id', blogcontrollrs.decreasedislike);
+
 
 
 
