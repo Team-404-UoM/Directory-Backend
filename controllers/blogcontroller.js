@@ -2,6 +2,10 @@
  const Blog = require('../models/blog');
 
 
+
+
+
+ //Get all articles
  const getBlog = async(req, res, next) => {
      let blog;
      try {
@@ -18,7 +22,7 @@
 
 
 
-
+ //Read article
  const getBlogById = async(req, res, next) => {
      const blogId = req.params.id;
 
@@ -44,14 +48,15 @@
 
 
 
-
+ //create article
  const createBlog = async(req, res, next) => {
-     const { title, image, body, like } = req.body;
+     const { title, image, body, like, filename } = req.body;
      const createBlog = new Blog({
          title,
          image,
          body,
-         like
+         like,
+         blogImage,
 
      });
      try {
@@ -69,7 +74,7 @@
  };
 
 
-
+ //Edit article
  const updateBlog = async(req, res, next) => {
      const { title, image, body } = req.body;
      const blogId = req.params.id;
@@ -102,7 +107,7 @@
 
 
  };
-
+ //Delete article
  const deleteBlog = async(req, res, next) => {
      const blogId = req.params.id;
 

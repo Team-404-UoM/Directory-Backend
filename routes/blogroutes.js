@@ -1,7 +1,21 @@
 const express = require('express');
+const Blog = require('../models/blog');
 const HttpError = require('../models/httperror');
 const blogcontrollrs = require('../controllers/blogcontroller');
 const router = express.Router();
+const multer = require("multer");
+
+
+const storage = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, ".../Frontend/src/Blog/images/")
+    },
+    filename: (req, file, callback) => {
+        callback(null, file.originalname);
+    }
+})
+
+const upload = multer({ storage: storage });
 
 
 
@@ -9,7 +23,7 @@ router.get('/Bloginterface', blogcontrollrs.getBlog);
 
 router.get('/:id', blogcontrollrs.getBlogById);
 
-router.post('/', blogcontrollrs.createBlog);
+router.post('/', upload.single('blogImage'), blogcontrollrs.createBlog);
 
 router.patch('/:id', blogcontrollrs.updateBlog);
 
