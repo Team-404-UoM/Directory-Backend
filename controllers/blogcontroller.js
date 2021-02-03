@@ -77,7 +77,7 @@
 
  //Edit article
  const updateBlog = async(req, res, next) => {
-     const { title, image, body } = req.body;
+     const { title, image, body, categorie } = req.body;
      const blogId = req.params.id;
 
      let blog;
@@ -94,6 +94,7 @@
      blog.title = title;
      blog.image = image;
      blog.body = body;
+     blog.categorie = categorie;
 
      try {
          await blog.save();
