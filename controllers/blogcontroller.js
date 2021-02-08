@@ -50,13 +50,14 @@
 
  //create article
  const createBlog = async(req, res, next) => {
-     const { title, image, body, like, filename } = req.body;
+     const { title, image, body, like, categorie, filename } = req.body;
      const createBlog = new Blog({
          title,
          image,
          body,
          like,
-         blogImage,
+         categorie,
+         blogImage: filename,
 
      });
      try {
@@ -76,7 +77,7 @@
 
  //Edit article
  const updateBlog = async(req, res, next) => {
-     const { title, image, body } = req.body;
+     const { title, image, body, categorie } = req.body;
      const blogId = req.params.id;
 
      let blog;
@@ -93,6 +94,7 @@
      blog.title = title;
      blog.image = image;
      blog.body = body;
+     blog.categorie = categorie;
 
      try {
          await blog.save();
@@ -133,28 +135,58 @@
      res.status(200).json({ message: 'Deletd place.' });
 
  };
-
+ //dislike increase
  const increaselike = async(req, res) => {
      Blog.findOne({ "_id": req.params.id }).then((result) => {
-         let currentcolor = result.color;
-         let newcolor = "info";
+         let currentcolor = result.likecolor;
+         let newcolor = "blue";
          let currentlike = result.like;
          let newlike = currentlike + 1;
-         Blog.updateOne({ "_id": req.params.id }, { $set: { like: newlike, color: newcolor } }).then(result => {
+         Blog.updateOne({ "_id": req.params.id }, { $set: { like: newlike, likecolor: newcolor } }).then(result => {
              res.send('like update');
          })
      })
  };
-
+ //like decrease
  const decreaselike = async(req, res) => {
      Blog.findOne({ "_id": req.params.id }).then((result) => {
-         let currentcolor = result.color;
-         let newcolor = "outline-info";
+         let currentcolor = result.likecolor;
+         let newcolor = "black";
          let currentlike = result.like;
          if (currentlike != 0) {
              let newlike = currentlike - 1;
-             Blog.updateOne({ "_id": req.params.id }, { $set: { like: newlike, color: newcolor } }).then(result => {
+             Blog.updateOne({ "_id": req.params.id }, { $set: { like: newlike, likecolor: newcolor } }).then(result => {
                  res.send('like decreased');
+
+             })
+         }
+         res.send("can't decrease")
+     })
+
+ };
+
+ //like increase
+ const increasedislike = async(req, res) => {
+     Blog.findOne({ "_id": req.params.id }).then((result) => {
+         let currentcolor = result.dislikecolor;
+         let newcolor = "blue";
+         let currentlike = result.dislike;
+         let newlike = currentlike + 1;
+         Blog.updateOne({ "_id": req.params.id }, { $set: { dislike: newlike, dislikecolor: newcolor } }).then(result => {
+             res.send('dislike update');
+         })
+     })
+ };
+ //like decrease
+ const decreasedislike = async(req, res) => {
+     Blog.findOne({ "_id": req.params.id }).then((result) => {
+         let currentcolor = result.dislikecolor;
+         let newcolor = "black";
+         let currentlike = result.dislike;
+         if (currentlike != 0) {
+             let newlike = currentlike - 1;
+             Blog.updateOne({ "_id": req.params.id }, { $set: { dislike: newlike, dislikecolor: newcolor } }).then(result => {
+                 res.send('dislike decreased');
 
              })
          }
@@ -173,3 +205,5 @@
  exports.deleteBlog = deleteBlog;
  exports.increaselike = increaselike;
  exports.decreaselike = decreaselike;
+ exports.increasedislike = increasedislike;
+ exports.decreasedislike = decreasedislike;
