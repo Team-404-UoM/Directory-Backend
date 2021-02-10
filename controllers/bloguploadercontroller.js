@@ -46,11 +46,13 @@ const getBlogById = async(req, res, next) => {
 
 
 const createBlog = async(req, res, next) => {
-    const { title, image, url } = req.body;
+    const { title, image, url, like, categorie, } = req.body;
     const createBlog = new Bloguploader({
         title,
         image,
-        url
+        url,
+        like,
+        categorie
     });
     try {
         await createBlog.save();
@@ -126,8 +128,76 @@ const deleteBlog = async(req, res, next) => {
     res.status(200).json({ message: 'Deletd place.' });
 
 };
+
+
+//dislike increase
+const increaselike = async(req, res) => {
+    Bloguploader.findOne({ "_id": req.params.id }).then((result) => {
+        let currentcolor = result.likecolor;
+        let newcolor = "blue";
+        let currentlike = result.like;
+        let newlike = currentlike + 1;
+        Bloguploader.updateOne({ "_id": req.params.id }, { $set: { like: newlike, likecolor: newcolor } }).then(result => {
+            res.send('like update');
+        })
+    })
+};
+//like decrease
+const decreaselike = async(req, res) => {
+    Bloguploader.findOne({ "_id": req.params.id }).then((result) => {
+        let currentcolor = result.likecolor;
+        let newcolor = "black";
+        let currentlike = result.like;
+        if (currentlike != 0) {
+            let newlike = currentlike - 1;
+            Bloguploader.updateOne({ "_id": req.params.id }, { $set: { like: newlike, likecolor: newcolor } }).then(result => {
+                res.send('like decreased');
+
+            })
+        }
+        res.send("can't decrease")
+    })
+
+};
+
+//like increase
+const increasedislike = async(req, res) => {
+    Bloguploader.findOne({ "_id": req.params.id }).then((result) => {
+        let currentcolor = result.dislikecolor;
+        let newcolor = "blue";
+        let currentlike = result.dislike;
+        let newlike = currentlike + 1;
+        Bloguploader.updateOne({ "_id": req.params.id }, { $set: { dislike: newlike, dislikecolor: newcolor } }).then(result => {
+            res.send('dislike update');
+        })
+    })
+};
+//like decrease
+const decreasedislike = async(req, res) => {
+    Bloguploader.findOne({ "_id": req.params.id }).then((result) => {
+        let currentcolor = result.dislikecolor;
+        let newcolor = "black";
+        let currentlike = result.dislike;
+        if (currentlike != 0) {
+            let newlike = currentlike - 1;
+            Bloguploader.updateOne({ "_id": req.params.id }, { $set: { dislike: newlike, dislikecolor: newcolor } }).then(result => {
+                res.send('dislike decreased');
+
+            })
+        }
+        res.send("can't decrease")
+    })
+
+};
+
+
+
 exports.getBlog = getBlog;
 exports.getBlogById = getBlogById;
 exports.createBlog = createBlog;
 exports.updateBlog = updateBlog;
 exports.deleteBlog = deleteBlog;
+exports.increaselike = increaselike;
+exports.decreaselike = decreaselike;
+exports.increasedislike = increasedislike;
+exports.decreasedislike = decreasedislike;
