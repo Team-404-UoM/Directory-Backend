@@ -15,6 +15,13 @@ router.patch('/:id', bloguploadercontrollrs.updateBlog);
 
 router.delete('/:id', bloguploadercontrollrs.deleteBlog);
 
+router.patch('/like/:id', bloguploadercontrollrs.increaselike);
+
+router.patch('/unlike/:id', bloguploadercontrollrs.decreaselike);
+
+router.patch('/dislike/:id', bloguploadercontrollrs.increasedislike);
+
+router.patch('/disunlike/:id', bloguploadercontrollrs.decreasedislike);
 
 
 
