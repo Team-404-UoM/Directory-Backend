@@ -2,6 +2,7 @@ const express = require("express")
 const path = require("path")
 const multer = require("multer")
 const router = express.Router();
+const Img = require('../models/imageUrl');
 
 
 
@@ -69,6 +70,26 @@ router.post('/upload', function(req, res, next) {
         }
     })
 })
+
+
+router.post('/url', (req, res) => {
+    const Url = new Img({
+        URL: req.body.URL
+
+    });
+
+    Url.save()
+        .then(result => res.send('New URL Added'))
+        .catch(err => console.log(err));
+
+});
+router.get('/allurl', (req, res) => {
+    Img.find().then(result => {
+        res.json(result);
+    }).catch(err => {
+        console.log(err);
+    });
+});
 module.exports = router;
 
 // Take any port number of your choice which 
