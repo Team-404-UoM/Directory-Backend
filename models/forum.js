@@ -7,7 +7,7 @@ const forumSchema = new Schema({
         //required: true
     },
     reply: {
-        type: []
+        type: [String]
 
     }
 
