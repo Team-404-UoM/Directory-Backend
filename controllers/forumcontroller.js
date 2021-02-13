@@ -127,6 +127,8 @@ const deleteForum = async(req, res, next) => {
 
 };
 
+
+
 exports.getForum = getForum;
 exports.getForumById = getForumById;
 exports.createForum = createForum;
