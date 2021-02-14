@@ -26,6 +26,16 @@ router.put('/reply/:id', (req, res) => {
     })
 })
 
+router.delete('/reply/:id', (req, res) => {
+    const { reply } = req.body;
+    Forum.findOne({ "_id": req.params.id }).then((result) => {
+        let newReply = reply;
+        Forum.updateOne({ "_id": req.params.id }, { $pull: { reply: newReply } }).then(result => {
+            res.send('reply deleted');
+        })
+    })
+})
+
 
 router.get('/', (req, res, next) => {
     console.log('Get Request in place');
