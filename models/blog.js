@@ -46,6 +46,10 @@ const blogSchema = new Schema({
     blogImage: {
         type: String,
 
+    },
+    views: {
+        type: Number,
+        default: 0
     }
 
 
