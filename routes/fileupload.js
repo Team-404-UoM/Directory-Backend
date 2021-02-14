@@ -74,7 +74,7 @@ router.post('/upload', function(req, res, next) {
 
 router.post('/url', (req, res) => {
     const Url = new Img({
-        URL: req.body.URL
+        url: req.body.url
 
     });
 

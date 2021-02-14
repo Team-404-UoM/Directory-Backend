@@ -6,6 +6,7 @@ const router = express.Router();
 const multer = require("multer");
 
 
+
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
         callback(null, ".../Frontend/src/Blog/images/")
@@ -38,7 +39,15 @@ router.patch('/dislike/:id', blogcontrollrs.increasedislike);
 router.patch('/disunlike/:id', blogcontrollrs.decreasedislike);
 
 
-
+router.put('/updateviews/:id', (req, res) => {
+    Blog.findOne({ "_id": req.params.id }).then((result) => {
+        let currentviews = result.views;
+        let newviews = currentviews + 1;
+        Blog.updateOne({ "_id": req.params.id }, { $set: { views: newviews } }).then(result => {
+            res.send('views update');
+        })
+    })
+})
 
 
 router.get('/', (req, res, next) => {
