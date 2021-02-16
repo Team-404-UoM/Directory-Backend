@@ -18,7 +18,9 @@ var storage = multer.diskStorage({
     },
     filename: function(req, file, cb) {
         //cb(null, file.originalname + "-" + Date.now() + ".jpg")
-        cb(null, Date.now() + '-' + file.originalname)
+        //cb(null, Date.now() + '-' + file.originalname)
+        const fileName = file.originalname.toLowerCase().split(" ").join("-");
+        cb(null, req.params.contentId + "-" + fileName);
     }
 })
 
@@ -28,6 +30,19 @@ var storage = multer.diskStorage({
 
 var upload = multer({
     storage: storage,
+    /* fileFilter: (req, file, cb) => {
+        if (
+            file.mimetype == "image/png" ||
+            file.mimetype == "image/jpg" ||
+            file.mimetype == "image/jpeg"
+        ) {
+            cb(null, true);
+        } else {
+            cb(null, false);
+            return cb(new Error("Only .png, .jpg and .jpeg format allowed!"));
+        }
+    },
+}); */
     //limits: { fileSize: maxSize },
     /* fileFilter: function(req, file, cb) {
 
@@ -47,9 +62,15 @@ var upload = multer({
     } */
 
     // mypic is the name of file attribute 
+
 }).single('file');
 
 
+/* router.post(
+    routeConstant.POST_CONTENT.UPDATE_IMAGE,
+    upload.single("file"),
+    (req, res) => PostcontentController.updateContentImage(req, res)
+); */
 
 router.post('/upload', function(req, res, next) {
 
@@ -75,6 +96,7 @@ router.post('/upload', function(req, res, next) {
 router.post('/url', (req, res) => {
     const Url = new Img({
         url: req.body.url
+
 
     });
 
