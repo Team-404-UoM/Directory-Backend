@@ -13,6 +13,7 @@ const signUp = require('./routes/SignUp');
 const fileupload = require('./routes/fileupload');
 const HttpError = require('./models/httperror');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 
@@ -35,6 +36,8 @@ app.use('/file', fileupload);
 
 //app.use('/gallery', gallery);
 //app.use('/jobs', jobs);
+app.use('/images', express.static(path.join('images')))
+
 app.use(cors());
 
 
