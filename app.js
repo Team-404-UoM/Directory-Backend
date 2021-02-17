@@ -7,6 +7,8 @@ const forumRouters = require('./routes/forumrouters');
 const bloguploaderRouters = require('./routes/bloguploaderroutes');
 const signUp = require('./routes/SignUp');
 const event = require('./routes/events');
+const gallery = require('./src/routes/gallery');
+const jobs = require('./src/routes/jobs');
 const fileupload = require('./routes/fileupload');
 const HttpError = require('./models/httperror');
 const cors = require('cors');
@@ -29,7 +31,11 @@ app.use('/Bloguploader', bloguploaderRouters);
 app.use(signUp);
 app.use('/Event', event);
 app.use('/file', fileupload);
+app.use('/events', events);
+app.use('/gallery', gallery);
+app.use('/jobs', jobs);
 app.use(cors());
+
 
 app.use((req, res, next) => {
     const error = new HttpError('Could not find this routee.', 404);

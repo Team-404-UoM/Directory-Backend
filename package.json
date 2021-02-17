@@ -22,6 +22,8 @@
         "mongoose": "^5.11.16",
         "multer": "^1.4.2",
         "multer-gridfs-storage": "^4.2.0",
-        "node-persist": "^3.1.0"
+        "node-persist": "^3.1.0",
+        "nodemailer": "^6.4.18",
+        "paypal-rest-sdk": "^1.8.1"
     }
 }
