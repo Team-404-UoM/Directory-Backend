@@ -1,12 +1,15 @@
 const express = require('express');
 const bodyparser = require('body-parser');
 const mongoose = require('mongoose');
+
 //const Blog = require('./models/blog');
 const blogRouters = require('./routes/blogroutes');
 const forumRouters = require('./routes/forumrouters');
 const bloguploaderRouters = require('./routes/bloguploaderroutes');
 const signUp = require('./routes/SignUp');
-const event = require('./routes/events');
+//const event = require('./routes/events');
+//const gallery = require('./src/routes/gallery');
+//const jobs = require('./src/routes/jobs');
 const fileupload = require('./routes/fileupload');
 const HttpError = require('./models/httperror');
 const cors = require('cors');
@@ -28,10 +31,15 @@ app.use('/Blog', blogRouters);
 app.use('/Forum', forumRouters);
 app.use('/Bloguploader', bloguploaderRouters);
 app.use(signUp);
-app.use('/Event', event);
+//app.use('/Event', event);
 app.use('/file', fileupload);
+
+//app.use('/gallery', gallery);
+//app.use('/jobs', jobs);
 app.use('/images', express.static(path.join('images')))
+
 app.use(cors());
+
 
 app.use((req, res, next) => {
     const error = new HttpError('Could not find this routee.', 404);
@@ -49,8 +57,6 @@ app.use((req, res, next) => {
 
 
 
-
-
 const mongodb = 'mongodb+srv://nirasha:1CVOHXmNP8iqpaVt@cluster0.bycqq.mongodb.net/WebMemberDirectory?ssl=true&ssl_cert_reqs=CERT_NONE'
 mongoose.connect(mongodb, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((result) => console.log('connected to db'))
@@ -61,8 +67,8 @@ mongoose.connect(mongodb, { useNewUrlParser: true, useUnifiedTopology: true })
 
 
 app.listen(4000);
-//backend github test commit
 
+//backend github test commit
 //test commit 1
 //second test commit
 //thirs test commit
