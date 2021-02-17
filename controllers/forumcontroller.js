@@ -48,10 +48,12 @@ const getForumById = async(req, res, next) => {
 
 
 const createForum = async(req, res, next) => {
-    const { message, reply } = req.body;
+    const { message, reply, privacytype, faculty } = req.body;
     const createForum = new Forum({
         message,
-        reply
+        reply,
+        privacytype,
+        faculty
     });
     try {
         await createForum.save();
@@ -126,6 +128,8 @@ const deleteForum = async(req, res, next) => {
     res.status(200).json({ message: 'Deletd place.' });
 
 };
+
+
 
 exports.getForum = getForum;
 exports.getForumById = getForumById;

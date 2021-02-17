@@ -9,7 +9,7 @@
  const getBlog = async(req, res, next) => {
      let blog;
      try {
-         blog = await Blog.find({});
+         blog = await Blog.find({}).sort({ updatedAt: -1 });
 
      } catch (err) {
          const error = new HttpError(

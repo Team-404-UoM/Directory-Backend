@@ -7,10 +7,15 @@ const forumSchema = new Schema({
         //required: true
     },
     reply: {
-        type: []
+        type: [String]
 
+    },
+    privacytype: {
+        type: String
+    },
+    faculty: {
+        type: String
     }
-
 }, { timestamps: true });
 const Forum = mongoose.model('Forum', forumSchema);
 module.exports = Forum;

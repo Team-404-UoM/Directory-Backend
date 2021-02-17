@@ -10,6 +10,7 @@ const event = require('./routes/events');
 const fileupload = require('./routes/fileupload');
 const HttpError = require('./models/httperror');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use('/Bloguploader', bloguploaderRouters);
 app.use(signUp);
 app.use('/Event', event);
 app.use('/file', fileupload);
+app.use('/images', express.static(path.join('images')))
 app.use(cors());
 
 app.use((req, res, next) => {
