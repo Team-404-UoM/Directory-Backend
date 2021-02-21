@@ -5,7 +5,7 @@ const Bloguploader = require('../models/bloguploader');
 const getBlog = async(req, res, next) => {
     let blog;
     try {
-        blog = await Bloguploader.find({}).sort({ updatedAt: -1 });
+        blog = await Bloguploader.find({}).sort({ createdAt: -1 });
 
     } catch (err) {
         const error = new HttpError(
