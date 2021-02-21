@@ -36,7 +36,7 @@ app.use('/file', fileupload);
 
 //app.use('/gallery', gallery);
 //app.use('/jobs', jobs);
-app.use('/images', express.static(path.join('images')))
+app.use('/images', express.static('images'))
 
 app.use(cors());
 

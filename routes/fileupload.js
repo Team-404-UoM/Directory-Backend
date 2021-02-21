@@ -18,9 +18,10 @@ var storage = multer.diskStorage({
     },
     filename: function(req, file, cb) {
         //cb(null, file.originalname + "-" + Date.now() + ".jpg")
-        //cb(null, Date.now() + '-' + file.originalname)
-        const fileName = file.originalname.toLowerCase().split(" ").join("-");
-        cb(null, req.params.contentId + "-" + fileName);
+        const imgname = Date.now() + '-' + file.originalname;
+        cb(null, imgname)
+            //const fileName = file.originalname.toLowerCase().split(" ").join("-");
+            //cb(null, req.params.contentId + "-" + fileName);
     }
 })
 
@@ -63,16 +64,24 @@ var upload = multer({
 
     // mypic is the name of file attribute 
 
-}).single('file');
+}) /* .single('file'); */
 
 
-/* router.post(
-    routeConstant.POST_CONTENT.UPDATE_IMAGE,
+router.post('/upload',
     upload.single("file"),
-    (req, res) => PostcontentController.updateContentImage(req, res)
-); */
+    (req, res) => {
+        const url = req.protocol + "://" + req.get("host");
+        //const id = req.params.id;
+        const path = new Img({
+            url: req.file.filename
+        })
+        path.save()
+            .then(result => res.send('New URL Added'))
+            .catch(err => console.log(err));
+    }
+);
 
-router.post('/upload', function(req, res, next) {
+/* router.post('/upload', function(req, res, next) {
 
     // Error MiddleWare for multer file upload, so if any 
     // error occurs, the image would not be uploaded! 
@@ -90,17 +99,18 @@ router.post('/upload', function(req, res, next) {
             res.send("Success, Image uploaded!")
         }
     })
-})
+}) */
 
 
 router.post('/url', (req, res) => {
-    const Url = new Img({
+
+    const URL = new Img({
         url: req.body.url
 
 
     });
 
-    Url.save()
+    URL.save()
         .then(result => res.send('New URL Added'))
         .catch(err => console.log(err));
 
