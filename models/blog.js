@@ -8,7 +8,7 @@ const blogSchema = new Schema({
     },
     image: {
         type: String,
-        required: true
+        //required: true
     },
     body: {
         type: String,
@@ -43,7 +43,7 @@ const blogSchema = new Schema({
     categorie: {
         type: String,
     },
-    blogImage: {
+    coverImage: {
         type: String,
 
     },

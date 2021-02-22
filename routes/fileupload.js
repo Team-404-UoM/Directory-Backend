@@ -2,7 +2,8 @@ const express = require("express")
 const path = require("path")
 const multer = require("multer")
 const router = express.Router();
-const Img = require('../models/imageUrl');
+//const Img = require('../models/imageUrl');
+const Img = require('../models/blog');
 
 
 
@@ -17,9 +18,9 @@ var storage = multer.diskStorage({
         cb(null, 'images')
     },
     filename: function(req, file, cb) {
-        //cb(null, file.originalname + "-" + Date.now() + ".jpg")
-        const imgname = Date.now() + '-' + file.originalname;
-        cb(null, imgname)
+        cb(null, file.originalname + "-" + Date.now() + ".jpg")
+            //const imgname = Date.now() + '-' + file.originalname;
+            //cb(null, imgname)
             //const fileName = file.originalname.toLowerCase().split(" ").join("-");
             //cb(null, req.params.contentId + "-" + fileName);
     }
@@ -67,19 +68,58 @@ var upload = multer({
 }) /* .single('file'); */
 
 
-router.post('/upload',
-    upload.single("file"),
-    (req, res) => {
-        const url = req.protocol + "://" + req.get("host");
+router.put('/upload/:id', upload.single('file'), (req, res) => {
+        //const url = req.protocol + "://" + req.get("host");
         //const id = req.params.id;
-        const path = new Img({
-            url: req.file.filename
+        Img.updateOne({ "_id": req.params.id }, {
+            $set: {
+                coverImage: req.file.filename
+            }
+        }).then(result => {
+            res.send('photo update');
         })
-        path.save()
-            .then(result => res.send('New URL Added'))
-            .catch(err => console.log(err));
+
+    })
+    /* const path = new Img({
+        url: req.file.filename
+    })
+    path.save() 
+        .then(result => res.send('New URL Added'))
+        .catch(err => console.log(err));
+});*/
+
+/* router.put('/upload/:_id', upload.single('file'), (req, res) => {
+
+    const blogId = req.params._id;
+
+    let blog;
+    try {
+        blog = await Blog.findById(blogId);
+    } catch (err) {
+        const error = new HttpError(
+            'Something went wrong,could not update place.', 500
+        );
+        return next(error);
     }
-);
+
+
+    blog.coverImage = req.file.filename;
+
+    try {
+        await blog.save();
+    } catch (err) {
+        const error = new HttpError(
+            'Someting went wrong,could not update place', 500
+        );
+        return next(error);
+    }
+
+    res.status(200).json({ blog: blog.toObject({ getters: true }) });
+
+
+}) */
+
+
 
 /* router.post('/upload', function(req, res, next) {
 

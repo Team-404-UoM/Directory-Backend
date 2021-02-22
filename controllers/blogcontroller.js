@@ -9,7 +9,7 @@
  const getBlog = async(req, res, next) => {
      let blog;
      try {
-         blog = await Blog.find({}).sort({ updatedAt: -1 });
+         blog = await Blog.find({}).sort({ createdAt: -1 });
 
      } catch (err) {
          const error = new HttpError(
@@ -50,14 +50,14 @@
 
  //create article
  const createBlog = async(req, res, next) => {
-     const { title, image, body, like, categorie, filename } = req.body;
+     const { title, image, body, like, categorie } = req.body;
      const createBlog = new Blog({
          title,
          image,
          body,
          like,
-         categorie,
-         blogImage: filename,
+         categorie
+
 
      });
      try {
