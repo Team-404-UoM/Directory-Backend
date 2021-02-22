@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const imageURL = new Schema({
     url: {
         type: String,
-        required: true
+        //required: true
     }
 });
 const ImageURL = mongoose.model('ImageURL', imageURL);
