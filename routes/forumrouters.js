@@ -17,10 +17,14 @@ router.delete('/:id', forumcontrollrs.deleteForum);
 
 
 router.put('/reply/:id', (req, res) => {
-    const { reply } = req.body;
+    const reply = {
+        body: req.body.body,
+        date: req.body.date
+    }
+
     Forum.findOne({ "_id": req.params.id }).then((result) => {
-        let newReply = reply;
-        Forum.updateOne({ "_id": req.params.id }, { $push: { reply: newReply } }).then(result => {
+        //let newReply = reply;
+        Forum.updateOne({ "_id": req.params.id }, { $push: { reply: reply } }).then(result => {
             res.send('reply update');
         })
     })
@@ -34,6 +38,12 @@ router.delete('/reply/:id', (req, res) => {
             res.send('reply deleted');
         })
     })
+})
+
+router.delete('/remove/:id', (req, res) => {
+    Forum.deleteOne({ "body": req.params.id })
+        .then(results => res.send('Event Deleted'))
+        .catch(err => console.log(err))
 })
 
 
