@@ -50,7 +50,13 @@ const blogSchema = new Schema({
     views: {
         type: Number,
         default: 0
-    }
+    },
+    comments: [{
+        body: String,
+        date: Date,
+        id: String
+
+    }],
 
 
 }, { timestamps: true });

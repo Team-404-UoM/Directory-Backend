@@ -6,10 +6,12 @@ const forumSchema = new Schema({
         type: String,
         //required: true
     },
-    reply: {
-        type: [String]
+    reply: [{
+        body: String,
+        date: Date,
+        id: String
 
-    },
+    }],
     privacytype: {
         type: String
     },

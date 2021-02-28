@@ -38,6 +38,8 @@ router.patch('/dislike/:id', blogcontrollrs.increasedislike);
 
 router.patch('/disunlike/:id', blogcontrollrs.decreasedislike);
 
+router.patch('/comment/:id', blogcontrollrs.comment);
+
 
 router.put('/updateviews/:id', (req, res) => {
     Blog.findOne({ "_id": req.params.id }).then((result) => {

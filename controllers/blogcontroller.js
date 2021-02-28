@@ -194,6 +194,20 @@
      })
 
  };
+ //comment area 
+ const comment = async(req, res) => {
+     const comment = {
+         body: req.body.body,
+         date: req.body.date
+     }
+
+     Blog.findOne({ "_id": req.params.id }).then((result) => {
+         //let newReply = reply;
+         Blog.updateOne({ "_id": req.params.id }, { $push: { comments: comment } }).then(result => {
+             res.send('Comment added');
+         })
+     })
+ }
 
 
 
@@ -207,3 +221,4 @@
  exports.decreaselike = decreaselike;
  exports.increasedislike = increasedislike;
  exports.decreasedislike = decreasedislike;
+ exports.comment = comment;
