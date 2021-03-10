@@ -3,11 +3,11 @@ const Blog = require('../models/blog');
 const HttpError = require('../models/httperror');
 const blogcontrollrs = require('../controllers/blogcontroller');
 const router = express.Router();
-const multer = require("multer");
+//const multer = require("multer");
 
 
 
-const storage = multer.diskStorage({
+/* const storage = multer.diskStorage({
     destination: (req, file, callback) => {
         callback(null, ".../Frontend/src/Blog/images/")
     },
@@ -17,14 +17,14 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({ storage: storage });
-
+ */
 
 
 router.get('/Bloginterface', blogcontrollrs.getBlog);
 
 router.get('/:id', blogcontrollrs.getBlogById);
 
-router.post('/', upload.single('blogImage'), blogcontrollrs.createBlog);
+router.post('/', blogcontrollrs.createBlog);
 
 router.patch('/:id', blogcontrollrs.updateBlog);
 
@@ -49,6 +49,14 @@ router.put('/updateviews/:id', (req, res) => {
             res.send('views update');
         })
     })
+})
+
+router.delete('/comment/:id', (req, res) => {
+    const commentbody = req.query.name
+    Blog.findOneAndUpdate({ "_id": req.params.id }, { $pull: { comments: { body: commentbody } } }).then(result => {
+            res.send('comment deleted');
+        })
+        .catch(err => res.send(err))
 })
 
 

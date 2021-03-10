@@ -50,10 +50,10 @@
 
  //create article
  const createBlog = async(req, res, next) => {
-     const { title, image, body, like, categorie } = req.body;
+     const { title, /*  image, */ body, like, categorie } = req.body;
      const createBlog = new Blog({
          title,
-         image,
+         //image,
          body,
          like,
          categorie
@@ -202,12 +202,13 @@
      }
 
      Blog.findOne({ "_id": req.params.id }).then((result) => {
-         //let newReply = reply;
          Blog.updateOne({ "_id": req.params.id }, { $push: { comments: comment } }).then(result => {
              res.send('Comment added');
          })
      })
  }
+
+
 
 
 
