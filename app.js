@@ -10,7 +10,9 @@ const signUp = require('./routes/SignUp');
 //const event = require('./routes/events');
 //const gallery = require('./src/routes/gallery');
 //const jobs = require('./src/routes/jobs');
+const questions = require('./routes/questionroutes');
 const fileupload = require('./routes/fileupload');
+const firebaseAuth = require('./config/firebase_config');
 const HttpError = require('./models/httperror');
 const cors = require('cors');
 const path = require('path');
@@ -18,6 +20,18 @@ const path = require('path');
 const app = express();
 
 app.use(bodyparser.json());
+
+// Check access token
+app.use(async function(req, res, next) {
+    const accessToken =  req.headers.authorization;
+    if(accessToken){
+        const accessTokenNoBearer = accessToken.replace('Bearer ','');
+        const decodedToken = await firebaseAuth.verifyIdToken(accessTokenNoBearer);
+
+        req.user = decodedToken;
+    }
+    next();
+});
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -31,6 +45,7 @@ app.use('/Blog', blogRouters);
 app.use('/Forum', forumRouters);
 app.use('/Bloguploader', bloguploaderRouters);
 app.use(signUp);
+app.use(questions);
 //app.use('/Event', event);
 app.use('/file', fileupload);
 

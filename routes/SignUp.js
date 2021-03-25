@@ -3,7 +3,7 @@ const router = express.Router()
 const signUpTemplateCopy = require('../models/signupmodels')
 const bcrypt = require('bcrypt');
 const firebaseAuth = require('../config/firebase_config');
-const Signup=require('../models/signupmodels');
+
 
 const ACADEMIC = "ACADEMIC";
 const PAST_STUDENT = "PAST_STUDENT";

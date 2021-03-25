@@ -27,12 +27,12 @@ const signUpTemplate = new mongoose.Schema({
     },
 
     gender:{
-        type:String,
-        required:true
+        type:String
+     
     },
      department:{
-        type:String,
-        required:true
+        type:String
+     
     },
   /*   contactNumber:{
         type:Number
