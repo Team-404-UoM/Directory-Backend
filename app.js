@@ -12,6 +12,7 @@ const signUp = require('./routes/SignUp');
 //const jobs = require('./src/routes/jobs');
 const questions = require('./routes/questionroutes');
 const fileupload = require('./routes/fileupload');
+const profile=require('./routes/directory');
 const firebaseAuth = require('./config/firebase_config');
 const HttpError = require('./models/httperror');
 const cors = require('cors');
@@ -46,6 +47,7 @@ app.use('/Forum', forumRouters);
 app.use('/Bloguploader', bloguploaderRouters);
 app.use(signUp);
 app.use(questions);
+app.use(profile);
 //app.use('/Event', event);
 app.use('/file', fileupload);
 
