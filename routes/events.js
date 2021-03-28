@@ -364,4 +364,6 @@ router.delete('/removeEvent/:id', (req,res) =>{
     })
 })
 
+//test event 
+
 module.exports = router;
