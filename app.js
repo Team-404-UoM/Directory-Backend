@@ -12,7 +12,7 @@ const signUp = require('./routes/SignUp');
 //const jobs = require('./src/routes/jobs');
 const questions = require('./routes/questionroutes');
 const fileupload = require('./routes/fileupload');
-const profile=require('./routes/directory');
+const profile = require('./routes/directory');
 const firebaseAuth = require('./config/firebase_config');
 const HttpError = require('./models/httperror');
 const cors = require('cors');
@@ -24,9 +24,9 @@ app.use(bodyparser.json());
 
 // Check access token
 app.use(async function(req, res, next) {
-    const accessToken =  req.headers.authorization;
-    if(accessToken){
-        const accessTokenNoBearer = accessToken.replace('Bearer ','');
+    const accessToken = req.headers.authorization;
+    if (accessToken) {
+        const accessTokenNoBearer = accessToken.replace('Bearer ', '');
         const decodedToken = await firebaseAuth.verifyIdToken(accessTokenNoBearer);
 
         req.user = decodedToken;
@@ -85,7 +85,4 @@ mongoose.connect(mongodb, { useNewUrlParser: true, useUnifiedTopology: true })
 
 app.listen(4000);
 
-//backend github test commit
-//test commit 1
-//second test commit
-//thirs test commit
+//backend check commit
