@@ -54,4 +54,9 @@ router.post('/users', async(request, response) => {
     // response.send()
 }) 
 
+router.get('/users', async(request, response) => {
+    const firebaseUserId = request.user.uid;
+    const user = await signUpTemplateCopy.findOne({ firebaseUserId });
+    response.status(200).send(user);
+})
 module.exports = router
