@@ -38,7 +38,7 @@ router.delete('/reply/:id', (req, res) => {
 
     //Forum.findOne({ "_id": req.params.id }).then((result) => {
 
-    Forum.findOneAndUpdate({ "_id": req.params.id }, { $pull: { reply: { body: replybody } } }).then(result => {
+    Forum.findOneAndUpdate({ "_id": req.params.id }, { $pull: { reply: { _id: replybody } } }).then(result => {
             res.send('reply deleted');
 
         })

@@ -53,7 +53,7 @@ router.put('/updateviews/:id', (req, res) => {
 
 router.delete('/comment/:id', (req, res) => {
     const commentbody = req.query.name
-    Blog.findOneAndUpdate({ "_id": req.params.id }, { $pull: { comments: { body: commentbody } } }).then(result => {
+    Blog.findOneAndUpdate({ "_id": req.params.id }, { $pull: { comments: { _id: commentbody } } }).then(result => {
             res.send('comment deleted');
         })
         .catch(err => res.send(err))
