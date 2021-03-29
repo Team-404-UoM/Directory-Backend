@@ -7,9 +7,11 @@ const blogRouters = require('./routes/blogroutes');
 const forumRouters = require('./routes/forumrouters');
 const bloguploaderRouters = require('./routes/bloguploaderroutes');
 const signUp = require('./routes/SignUp');
-//const event = require('./routes/events');
-//const gallery = require('./src/routes/gallery');
-//const jobs = require('./src/routes/jobs');
+
+const events = require('./routes/events');
+const gallery = require('./routes/gallery');
+const jobs = require('./routes/jobs');
+
 const questions = require('./routes/questionroutes');
 const fileupload = require('./routes/fileupload');
 const profile = require('./routes/directory');
@@ -21,6 +23,12 @@ const path = require('path');
 const app = express();
 
 app.use(bodyparser.json());
+
+//Configure dotenv
+require("dotenv").config();
+
+
+app.use('/uploads', express.static('uploads'));
 
 // Check access token
 app.use(async function(req, res, next) {
@@ -48,11 +56,14 @@ app.use('/Bloguploader', bloguploaderRouters);
 app.use(signUp);
 app.use(questions);
 app.use(profile);
-//app.use('/Event', event);
+
 app.use('/file', fileupload);
 
-//app.use('/gallery', gallery);
-//app.use('/jobs', jobs);
+//Add initial route for testing
+app.use('/events', events);
+app.use('/gallery', gallery);
+app.use('/jobs', jobs);
+
 app.use('/images', express.static('images'))
 
 app.use(cors());
@@ -74,16 +85,33 @@ app.use((req, res, next) => {
 
 
 
-const mongodb = 'mongodb+srv://nirasha:1CVOHXmNP8iqpaVt@cluster0.bycqq.mongodb.net/WebMemberDirectory?ssl=true&ssl_cert_reqs=CERT_NONE'
-mongoose.connect(mongodb, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then((result) => console.log('connected to db'))
-    .catch((err) => console.log(err));
+//const mongodb = 'mongodb+srv://nirasha:1CVOHXmNP8iqpaVt@cluster0.bycqq.mongodb.net/WebMemberDirectory?ssl=true&ssl_cert_reqs=CERT_NONE'
+//mongoose.connect(mongodb, { useNewUrlParser: true, useUnifiedTopology: true })
+   // .then((result) => console.log('connected to db'))
+   // .catch((err) => console.log(err));
 
 
 
 
 
-app.listen(4000);
+//app.listen(4000);
+
+//Start server
+app.listen(process.env.PORT, () =>{
+
+    console.log(`server started at ${process.env.PORT}`);
+
+    //Connect to the database
+    mongoose.Promise = global.Promise;
+    mongoose
+    .connect(process.env.MONGO_URI,{
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }, (err, db) =>{
+        console.log("MongoDB Connected Successfully!!")
+        
+    })
+})
 
 //backend check commit
 //secondcommit

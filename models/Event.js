@@ -21,16 +21,20 @@ const EventSchema = mongoose.Schema({
         type: String,
         required: false
     },
-    paid: {
+    postpone: {
         type: Boolean,
-        required: true
+        default: false
     },
     tickets: {
-        type: []
-
+        type: Array,
+        required: false
     },
-
-
+    paid: {
+        type: Boolean,
+        required: true,
+        default: false
+    }
+    
 })
 
 mongoose.model('events', EventSchema)
