@@ -9,14 +9,10 @@ const multer = require('multer');
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 
-const storage_l = require('node-persist');
-const { TLSSocket } = require("tls");
-storage_l.init({expiredInterval: 2 * 60 * 1000});
-
 require('../models/Event');
 const Events = mongoose.model('events');
 
-const mongoURI = ' mongodb+srv://nirasha:1CVOHXmNP8iqpaVt@cluster0.bycqq.mongodb.net/event_planning_db?ssl=true&ssl_cert_reqs=CERT_NONE' ;
+const mongoURI = ' mongodb+srv://nirasha:1CVOHXmNP8iqpaVt@cluster0.bycqq.mongodb.net/WebMemberDirectory?ssl=true&ssl_cert_reqs=CERT_NONE';
 
 // Create mongo connection
 const conn = mongoose.createConnection(mongoURI);
@@ -51,8 +47,8 @@ const upload = multer({ storage });
 //Paypal config
 paypal.configure({
     'mode': 'sandbox', //set method as sandbox 
-    'client_id': 'AWPao5bkrXqdIIIC8vRuW6XIrYBMTRPPndJ10nZ67XLoITXNaL7ApPOZ9UyH5IKxrHQAHbVgWWdQi48q',
-    'client_secret': 'EKCAi8W3J8ObYM_Un7T9iDvZ8fccEHjBIw7f5bvwQmA3oFnl2G1pc8pPrFGcT6Qtwk-LYnrPdYDnKwZZ'
+    'client_id': 'AaTHqF1m-XImn1QyWi3OSoaEWidzX--UZ0p-UdNkwVRs57Y3bsma4Pz9-q6YGkQFRiAtJ-efxNddnf3k',
+    'client_secret': 'EEf-8CaKkAil_O9sK7B6fWstxw6v_zdtbREQ_3H5KWzbSJ201kIuO-ZE_beBZIHhC_Vv6L1PLp75ewDD'
 });
 
 //Ticket schema
@@ -66,6 +62,14 @@ const TicketsSchema = mongoose.Schema({
         required: true
     },
     email: {
+        type: String,
+        required: true
+    },
+    referance: {
+        type: Number,
+        required: true
+    },
+    ticket_type: {
         type: String,
         required: true
     },
@@ -108,30 +112,12 @@ router.get('/getUsers', (req,res) =>{
 
 
 //Get payemet data collection names
-router.get('/payemnt_collections', (req, res) => {
-    mongoose.connection.db.listCollections().toArray(function (err, names) {
-        if (err) {
-          console.log(err);
-        } else {
-        let data = []
-          names.map(item =>{
-              if(item.name.match(/_payments/gi)){
-                    data.push(item.name)
-                    storage_l.setItem('payment_set', data)
-              }
-          })
-          storage_l.getItem('payment_set').then(out => {
-            res.send(out)
-          })
-        }
-    })
+router.get('/payemnt_collections/:id', (req, res) => {
+    mongoose.connection.db.collection(`${req.params.id}_pay`)
 });
 
-//get payement records from DB
-router.get('/paymentRecords/:name', (req,res) => {
-    let rec = mongoose.model(req.params.name, TicketsSchema);
-
-    rec.find().then(result => {
+router.get('/eventData', (req,res) => {
+    Events.find({},{_id: 1, title: 1, paid: 1}).then(result =>{
         res.send(result)
     })
 })
@@ -167,7 +153,7 @@ router.get('/getThumb', (req, res) => {
 
   //Get payment records
   router.get('/getPayments/:id', (req,res) =>{
-    const payemtDB = mongoose.connection.useDb('event_planning_db');
+    const payemtDB = mongoose.connection.useDb('WebMemberDirectory');
     payemtDB.collection(`${req.params.id}_payments`).find().toArray((err, result) =>{
         if (err) throw err;
         res.send(result);
@@ -246,15 +232,23 @@ router.get('/tickets/:id', (req,res) => {
 router.post('/register/:id', async (req,res) =>{
         let ticket = mongoose.model(`${req.params.id}_payments`, TicketsSchema);
 
+        let ref = Math.floor(Math.random() * 9999) + 1001;
+        let nic = req.body.nic
+        let nic_num = nic.substring(0, 9)
+        let referance_id = parseInt(nic_num) + ref
+
         const payment = new ticket({
-            test: 'test',
             current: req.body.name,
             phone: req.body.phone,
             email: req.body.email,
+            ticket_type: req.body.ticket_type,
+            referance: referance_id,
             qty: req.body.qty,
             nic: req.body.nic,
             price: req.body.price
         });
+
+        console.log(payment);
 
         payment.save().then(result => {
             res.json(result);
@@ -272,17 +266,8 @@ router.post('/register/:id', async (req,res) =>{
                     auth: {
                         user: 'nirashawimalasooriya@gmail.com',
                         pass: 'nirasha123'
-                    },
-
-                    tls: {
-                        rejectUnauthorized: false
                     }
                 });
-
-                tls: {
-                    rejectUnauthorized: false
-                }
-                
     
                 let mailOptions = {
                     from: 'nirashawimalasooriya@gmail.com',
@@ -294,13 +279,15 @@ router.post('/register/:id', async (req,res) =>{
                 <h3>Ticket Details</h3>
                 <p><b>Total Payment :</b> ${req.body.price} LKR</p>
                 <p><b>Number Of Tickets :</b> ${req.body.qty} </p>
+                <p><b>Ticket Type :</b> ${req.body.ticket_type} </p>
+                <p><b>Reference Number :</b> ${referance_id} </p>
                 <p><b>Booking Date :</b> ${result.date} </p>
                 <br>
-                <p>Please come to event 15 miniutes before starting time, Enjoy!</p>
+                <p>Please come to event 15 miniutes before starting time, Make sure to keep this email with you. Enjoy!</p>
                 <br>
                 <p>Thank You,</p>
                 <p>Regards,</p>
-                <p>Organizatin Team</p> `
+                <p>Organizing Team</p> `
                 };
     
                 transporter.sendMail(mailOptions, function(error, info) {
@@ -317,6 +304,162 @@ router.post('/register/:id', async (req,res) =>{
         }).catch(err => console.log(err));
     
 });
+
+//Send event postpone alerts 
+router.post('/sendPPAlerts/:id', (req,res) => {
+
+    let ticket = mongoose.model(`${req.params.id}_payments`, TicketsSchema);
+
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+            user: 'nirashawimalasooriya@gmail.com',
+            pass: 'nirasha123'
+        }
+    });
+
+    console.log(req.body);
+
+    Events.findOne({_id: req.params.id}).then(resulte => {
+    ticket.find().then(result =>{
+        for(let i =0; i < result.length; i++){
+        let mailOptions = {
+            from: 'nirashawimalasooriya@gmail.com',
+            to: result[i].email,
+            subject: `Event ${resulte.title} Postponed - Unviversity Of Moratuwa Event Protal`,
+            html: `<h2>Hello!</h2>
+        <br>
+        <p>${req.body.datas}</p>
+        <br>
+        <p>Thank You,</p>
+        <p>Regards,</p>
+        <p>Organizing Team</p> `
+        };
+
+        transporter.sendMail(mailOptions, function(error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+    }
+    Events.updateOne({_id: req.params.id}, { $set: {postpone: true}}).then(results => {
+        res.send(true);
+    })
+    })
+})
+})
+
+//Send Reminder alerts
+router.post('/sendReminderAlerts/:id', (req,res) => {
+
+    let ticket = mongoose.model(`${req.params.id}_payments`, TicketsSchema);
+
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+            user: 'nirashawimalasooriya@gmail.com',
+            pass: 'nirasha123'
+        }
+    });
+
+    Events.findOne({_id: req.params.id}).then(resulte => {
+    ticket.find().then(result =>{
+        for(let i =0; i < result.length; i++){
+        let mailOptions = {
+            from: 'nirashawimalasooriya@gmail.com',
+            to: result[i].email,
+            subject: `Event Reminder For ${resulte.title} - Unviversity Of Moratuwa Event Protal`,
+            html: `<h2>Hello!</h2>
+        <br>
+        <p>${req.body.datas}</p>
+        <br>
+        <p>Thank You,</p>
+        <p>Regards,</p>
+        <p>Organizing Team</p> `
+        };
+
+        transporter.sendMail(mailOptions, function(error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+    }
+    res.send(true);
+    })
+})
+})
+
+//Set event state to potpone
+router.put('/postponeEvent/:id', (req,res) => {
+    console.log(req.params.id);
+    Events.updateOne({_id: req.params.id}, { $set: {postpone: true}}).then(results => {
+        res.send(results);
+    })
+})
+
+//Set event state to live
+router.put('/resumeEvent/:id', (req,res) => {
+    console.log(req.params.id);
+    Events.updateOne({_id: req.params.id}, { $set: {postpone: false}}).then(results => {
+        res.send(results);
+    })
+})
+
+router.post('/sendEventAlerts/:id', (req,res) => {
+
+    let ticket = mongoose.model(`${req.params.id}_payments`, TicketsSchema);
+
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+            user: 'nirashawimalasooriya@gmail.com',
+            pass: 'nirasha123'
+        }
+    });
+
+    console.log(req.body);
+
+    Events.findOne({_id: req.params.id}).then(resulte => {
+    ticket.find().then(result =>{
+        for(let i =0; i < result.length; i++){
+        let mailOptions = {
+            from: 'nirashawimalasooriya@gmail.com',
+            to: result[i].email,
+            subject: `Event ${resulte.title} Postponed - Unviversity Of Moratuwa Event Protal`,
+            html: `<h2>Hello!</h2>
+        <br>
+        <p>${req.body.datas}</p>
+        <br>
+        <p>Thank You,</p>
+        <p>Regards,</p>
+        <p>Organizing Team</p> `
+        };
+
+        transporter.sendMail(mailOptions, function(error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+    }
+    Events.updateOne({_id: req.params.id}, { $set: {postpone: true}}).then(results => {
+        res.send(true);
+    })
+    })
+})
+})
+
 
 
 //Update attendance for event
