@@ -139,7 +139,7 @@ router.post('/createAlbum', upload.single("image"), (req,res) =>{
 router.post('/uploadPhoto/:id', upload_album.array("image"), (req,res) =>{
   console.log(req.files);
   req.files.map(item => {
-    let path = `http://localhost:5000/${item.path}`;
+    let path = `http://localhost:4000/${item.path}`;
     album.update({_id: req.params.id}, { $push: { images: path } }).then(result => {
       console.log(result);
     })
