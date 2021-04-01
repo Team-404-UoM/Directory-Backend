@@ -266,7 +266,13 @@ router.post('/register/:id', async (req,res) =>{
                     auth: {
                         user: 'nirashawimalasooriya@gmail.com',
                         pass: 'nirasha123'
+                    },
+
+                    tls:{
+
+                        rejectUnauthorized: false
                     }
+
                 });
     
                 let mailOptions = {
@@ -317,6 +323,10 @@ router.post('/sendPPAlerts/:id', (req,res) => {
         auth: {
             user: 'nirashawimalasooriya@gmail.com',
             pass: 'nirasha123'
+        },
+        tls:{
+
+            rejectUnauthorized: false
         }
     });
 
@@ -365,6 +375,10 @@ router.post('/sendReminderAlerts/:id', (req,res) => {
         auth: {
             user: 'nirashawimalasooriya@gmail.com',
             pass: 'nirasha123'
+        },
+        tls:{
+
+            rejectUnauthorized: false
         }
     });
 
@@ -424,6 +438,11 @@ router.post('/sendEventAlerts/:id', (req,res) => {
         auth: {
             user: 'nirashawimalasooriya@gmail.com',
             pass: 'nirasha123'
+        },
+
+        tls:{
+
+            rejectUnauthorized: false
         }
     });
 
