@@ -8,6 +8,7 @@ const forumRouters = require('./routes/forumrouters');
 const bloguploaderRouters = require('./routes/bloguploaderroutes');
 const signUp = require('./routes/SignUp');
 
+
 const events = require('./routes/events');
 const gallery = require('./routes/gallery');
 const jobs = require('./routes/jobs');
@@ -57,6 +58,7 @@ app.use(signUp);
 app.use(questions);
 app.use(profile);
 
+
 app.use('/file', fileupload);
 
 //Add initial route for testing
@@ -87,8 +89,8 @@ app.use((req, res, next) => {
 
 //const mongodb = 'mongodb+srv://nirasha:1CVOHXmNP8iqpaVt@cluster0.bycqq.mongodb.net/WebMemberDirectory?ssl=true&ssl_cert_reqs=CERT_NONE'
 //mongoose.connect(mongodb, { useNewUrlParser: true, useUnifiedTopology: true })
-   // .then((result) => console.log('connected to db'))
-   // .catch((err) => console.log(err));
+// .then((result) => console.log('connected to db'))
+// .catch((err) => console.log(err));
 
 
 
@@ -97,20 +99,20 @@ app.use((req, res, next) => {
 //app.listen(4000);
 
 //Start server
-app.listen(process.env.PORT, () =>{
+app.listen(process.env.PORT, () => {
 
     console.log(`server started at ${process.env.PORT}`);
 
     //Connect to the database
     mongoose.Promise = global.Promise;
     mongoose
-    .connect(process.env.MONGO_URI,{
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    }, (err, db) =>{
-        console.log("MongoDB Connected Successfully!!")
-        
-    })
+        .connect(process.env.MONGO_URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        }, (err, db) => {
+            console.log("MongoDB Connected Successfully!!")
+
+        })
 })
 
 //backend check commit
