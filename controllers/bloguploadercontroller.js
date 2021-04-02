@@ -46,13 +46,16 @@ const getBlogById = async(req, res, next) => {
 
 
 const createBlog = async(req, res, next) => {
-    const { title, image, url, like, categorie, } = req.body;
+    const { title, image, url, like, categorie, firebaseId, firstname, lastname } = req.body;
     const createBlog = new Bloguploader({
         title,
         image,
         url,
         like,
-        categorie
+        categorie,
+        firebaseId,
+        firstname,
+        lastname
     });
     try {
         await createBlog.save();

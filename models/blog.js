@@ -6,13 +6,19 @@ const blogSchema = new Schema({
         type: String,
         required: true
     },
-    /* image: {
+    firebaseId: {
         type: String,
-        //required: true
-    }, */
+
+    },
     body: {
         type: String,
         required: true
+    },
+    firstname: {
+        type: String
+    },
+    lastname: {
+        type: String
     },
     like: {
         type: Number,
@@ -54,7 +60,11 @@ const blogSchema = new Schema({
     comments: [{
         body: String,
         date: Date,
-        id: String
+        id: String,
+        userId: String,
+        firebaseId: String,
+        firstname: String,
+        lastname: String
 
     }],
 
