@@ -1,86 +1,77 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const signUpTemplate = new mongoose.Schema({
-    firstName:{
-        type:String,
-        required:true
-    },
-    firebaseUserId:{
+const signUpTemplate = new Schema({
+    firstName: {
         type: String,
         required: true
     },
-    lastName:{
-        type:String,
-        required:true
+    firebaseUserId: {
+        type: String,
+        required: true
     },
-    type:{
+    lastName: {
+        type: String,
+        required: true
+    },
+    type: {
         type: String,
         required: true,
     },
-    faculty:{
-        type:String,
-        required:true
+    faculty: {
+        type: String,
+        required: true
     },
-    Batch:{
-        type:String,
-        required: false 
+    Batch: {
+        type: String,
+        required: false
     },
 
-    gender:{
-        type:String
-     
-    },
-     department:{
-        type:String
-     
-    },
-  /*   contactNumber:{
-        type:Number
-    },
-    status:{
-        type:String
-    },
-    dob:{
-        type:Date
-    },
-    workingPlace:{
-        type:[String]
-    },position:{
-        type:[String]    
-    },
-    experience:{
-        type:[String]    
-    },
-    education:{
-        type:[String]    
-    },
-    socialLinkFB:{
-        type:String   
-    },
-    socialLinkTwitter:{
-        type:String   
-    },socialLinkInsta:{
-        type:String   
-    },
-    socialLinkLinkedin:{
-        type:String   
-    },*/
-    
+    gender: {
+        type: String
 
-    // email:{
-    //     type:String,
-    //     required:true
-    // },
+    },
+    department: {
+        type: String
 
-    // password:{
-    //     type:String,
-    //     required:true
-    // },
-
-    date:{
-        type:Date,
-        default:Date.now
+    },
+    contactNumber: {
+        type: Number
+    },
+    status: {
+        type: String
+    },
+    dob: {
+        type: Date
+    },
+    workingPlace: {
+        type: [String]
+    },
+    position: {
+        type: [String]
+    },
+    experience: {
+        type: [String]
+    },
+    education: {
+        type: [String]
+    },
+    socialLinkFB: {
+        type: String
+    },
+    socialLinkTwitter: {
+        type: String
+    },
+    socialLinkInsta: {
+        type: String
+    },
+    socialLinkLinkedin: {
+        type: String
+    },
+    date: {
+        type: Date,
+        default: Date.now
     }
 })
-
-module.exports = mongoose.model('pastStudents', signUpTemplate)
+const Signup = mongoose.model('pastStudents', signUpTemplate)
+module.exports = Signup;
