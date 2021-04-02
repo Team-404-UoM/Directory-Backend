@@ -50,13 +50,15 @@
 
  //create article
  const createBlog = async(req, res, next) => {
-     const { title, /*  image, */ body, like, categorie } = req.body;
+     const { title, body, like, categorie, firebaseId, firstname, lastname } = req.body;
      const createBlog = new Blog({
          title,
-         //image,
          body,
          like,
-         categorie
+         categorie,
+         firebaseId,
+         firstname,
+         lastname
 
 
      });
@@ -198,7 +200,12 @@
  const comment = async(req, res) => {
      const comment = {
          body: req.body.body,
-         date: req.body.date
+         date: req.body.date,
+         userId: req.body.userId,
+         firebaseId: req.body.firebaseId,
+         firstname: req.body.firstname,
+         lastname: req.body.lastname
+
      }
 
      Blog.findOne({ "_id": req.params.id }).then((result) => {

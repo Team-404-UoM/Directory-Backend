@@ -14,6 +14,16 @@ const bloguploaderSchema = new Schema({
         type: String,
         required: true
     },
+    firebaseId: {
+        type: String,
+
+    },
+    firstname: {
+        type: String
+    },
+    lastname: {
+        type: String
+    },
     like: {
         type: Number,
         default: 0
