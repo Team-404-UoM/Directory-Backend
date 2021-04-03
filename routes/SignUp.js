@@ -43,6 +43,7 @@ router.post('/signup', async(request, response) => {
         const customToken = await firebaseAuth.createCustomToken(firebaseUserId);
         response.status(200).send(customToken);
     } catch (error) {
+        await firebaseAuth.deleteUser(firebaseUserId);
         console.error(error);
         response.json(error)
     }
