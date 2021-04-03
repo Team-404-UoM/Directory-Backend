@@ -19,7 +19,11 @@ router.delete('/:id', forumcontrollrs.deleteForum);
 router.put('/reply/:id', (req, res) => {
     const reply = {
         body: req.body.body,
-        date: req.body.date
+        date: req.body.date,
+        firebaseId: req.body.firebaseId,
+        userId: req.body.userId,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname
     }
 
     Forum.findOne({ "_id": req.params.id }).then((result) => {
