@@ -8,7 +8,7 @@ const forumRouters = require('./routes/forumrouters');
 const bloguploaderRouters = require('./routes/bloguploaderroutes');
 const signUp = require('./routes/SignUp');
 
-
+//importing event,gallery,jobs routes
 const events = require('./routes/events');
 const gallery = require('./routes/gallery');
 const jobs = require('./routes/jobs');
