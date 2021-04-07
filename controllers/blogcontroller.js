@@ -7,9 +7,11 @@
 
  //Get all articles
  const getBlog = async(req, res, next) => {
+     const type = req.body.params;
      let blog;
      try {
-         blog = await Blog.find({}).sort({ createdAt: -1 });
+         blog = await (await Blog.find({}).sort({ createdAt: -1 }))
+
 
      } catch (err) {
          const error = new HttpError(

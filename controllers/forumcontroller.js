@@ -2,7 +2,7 @@ const HttpError = require('../models/httperror');
 const Forum = require('../models/forum');
 
 
-
+//get all qestions
 const getForum = async(req, res, next) => {
     let forum;
     try {
@@ -20,7 +20,7 @@ const getForum = async(req, res, next) => {
 
 
 
-
+//get uniq question
 const getForumById = async(req, res, next) => {
     const forumId = req.params.id;
 
@@ -46,7 +46,7 @@ const getForumById = async(req, res, next) => {
 
 
 
-
+//create question
 const createForum = async(req, res, next) => {
     const { message, reply, privacytype, faculty, firebaseId, userId, lastname, firstname, userType } = req.body;
     const createForum = new Forum({
@@ -75,7 +75,7 @@ const createForum = async(req, res, next) => {
 };
 
 
-
+//Update question
 const updateForum = async(req, res, next) => {
     const { message } = req.body;
     const forumId = req.params.id;
@@ -107,7 +107,7 @@ const updateForum = async(req, res, next) => {
 
 
 };
-
+//delete question
 const deleteForum = async(req, res, next) => {
     const forumId = req.params.id;
 
