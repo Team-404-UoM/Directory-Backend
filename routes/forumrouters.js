@@ -36,14 +36,25 @@ router.put('/reply/:id', (req, res) => {
 
 router.delete('/reply/:id', (req, res) => {
 
-    //Forum.aggregate([{ "$project": { "matchedIndex": { "$indexOfArray": ["$reply", { "_id": req.params.id }] } } }]).then((res) => console.log()).catch((err) => console.log(err))
+
 
     const replybody = req.query.name
 
     //Forum.findOne({ "_id": req.params.id }).then((result) => {
 
-    Forum.findOneAndUpdate({ "_id": req.params.id }, { $pull: { reply: { _id: replybody } } }).then(result => {
+    Forum.findByIdAndUpdate({ "_id": req.params.id }, { $pull: { reply: { _id: replybody } } }, { useFindAndModify: false }).then(result => {
             res.send('reply deleted');
+
+        })
+        .catch(err => res.send(err))
+})
+
+router.patch('/reply/:id', (req, res) => {
+    const replyid = req.query.id;
+    const replybody = req.body.reply;
+    console.log(replybody);
+    Forum.updateOne({ "_id": req.params.id, "reply._id": replyid }, { $set: { "reply.$.body": replybody } }).then(result => {
+            res.send("Reply Updated");
 
         })
         .catch(err => res.send(err))
