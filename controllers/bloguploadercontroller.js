@@ -1,7 +1,7 @@
 const HttpError = require('../models/httperror');
 const Bloguploader = require('../models/bloguploader');
 
-
+//get all uploaded blogs
 const getBlog = async(req, res, next) => {
     let blog;
     try {
@@ -18,7 +18,7 @@ const getBlog = async(req, res, next) => {
 
 
 
-
+//get uniq blog
 const getBlogById = async(req, res, next) => {
     const blogId = req.params.id;
 
@@ -44,7 +44,7 @@ const getBlogById = async(req, res, next) => {
 
 
 
-
+//create upload blog
 const createBlog = async(req, res, next) => {
     const { title, image, url, like, categorie, firebaseId, firstname, lastname } = req.body;
     const createBlog = new Bloguploader({
@@ -105,7 +105,7 @@ const updateBlog = async(req, res, next) => {
 
 
 };
-
+//delete  upload blog
 const deleteBlog = async(req, res, next) => {
     const blogId = req.params.id;
 
