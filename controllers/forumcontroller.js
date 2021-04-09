@@ -5,16 +5,34 @@ const Forum = require('../models/forum');
 //get all qestions
 const getForum = async(req, res, next) => {
     let forum;
-    try {
-        forum = await Forum.find({});
+    const usertype = req.query.type;
+    const faculty = req.query.faculty;
+    console.log(usertype);
+    console.log(faculty)
+    if (usertype == "ACADEMIC") {
+        try {
+            forum = await Forum.find({ $or: [{ privacytype: "academic" }, { privacytype: "all" }] });
 
-    } catch (err) {
-        const error = new HttpError(
-            'Somethings went wrong,could not find data', 500
-        );
-        return next(error);
+        } catch (err) {
+            const error = new HttpError(
+                'Somethings went wrong,could not find data', 500
+            );
+            return next(error);
+        }
+        res.send(forum)
+    } else if (usertype == "PAST STUDENT") {
+        try {
+            forum = await Forum.find({ $or: [{ privacytype: "student" }, { privacytype: "all" }] });
+
+        } catch (err) {
+            const error = new HttpError(
+                'Somethings went wrong,could not find data', 500
+            );
+            return next(error);
+        }
+        res.send(forum)
+
     }
-    res.send(forum)
 }
 
 
