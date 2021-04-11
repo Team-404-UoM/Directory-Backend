@@ -7,11 +7,13 @@ const getForum = async(req, res, next) => {
     let forum;
     const usertype = req.query.type;
     const faculty = req.query.faculty;
+    const userId = req.query.userid;
     console.log(usertype);
-    console.log(faculty)
+    console.log(faculty);
+    console.log(userId);
     if (usertype == "ACADEMIC") {
         try {
-            forum = await Forum.find({ $or: [{ privacytype: "academic" }, { privacytype: "all" }] });
+            forum = await Forum.find({ $or: [{ privacytype: "academic" }, { privacytype: "all" }, { userId: userId }] });
 
         } catch (err) {
             const error = new HttpError(
@@ -20,9 +22,9 @@ const getForum = async(req, res, next) => {
             return next(error);
         }
         res.send(forum)
-    } else if (usertype == "PAST STUDENT") {
+    } else if (usertype == "PAST_STUDENT") {
         try {
-            forum = await Forum.find({ $or: [{ privacytype: "student" }, { privacytype: "all" }] });
+            forum = await Forum.find({ $or: [{ privacytype: "all" }, { faculty: faculty }, { faculty: "all" }, { userId: userId }] });
 
         } catch (err) {
             const error = new HttpError(
