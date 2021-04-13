@@ -7,6 +7,7 @@ const Forum = require('../models/forum');
 
 router.get('/home', forumcontrollrs.getForum);
 
+router.get('/forumprofile', forumcontrollrs.getUserForum);
 router.get('/:id', forumcontrollrs.getForumById);
 
 router.post('/', forumcontrollrs.createForum);

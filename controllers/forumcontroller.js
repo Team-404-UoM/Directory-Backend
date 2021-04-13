@@ -37,6 +37,26 @@ const getForum = async(req, res, next) => {
     }
 }
 
+//get user qestions
+const getUserForum = async(req, res, next) => {
+    let forum;
+
+    const userId = req.query.Id;
+
+    console.log(userId);
+
+    try {
+        forum = await Forum.find({ firebaseId: userId }).sort({ createdAt: -1 });
+
+    } catch (err) {
+        const error = new HttpError(
+            'Somethings went wrong,could not find data', 500
+        );
+        return next(error);
+    }
+    res.send(forum)
+}
+
 
 
 
@@ -157,6 +177,7 @@ const deleteForum = async(req, res, next) => {
 
 
 exports.getForum = getForum;
+exports.getUserForum = getUserForum;
 exports.getForumById = getForumById;
 exports.createForum = createForum;
 exports.updateForum = updateForum;

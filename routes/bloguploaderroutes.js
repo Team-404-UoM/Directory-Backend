@@ -6,6 +6,7 @@ const router = express.Router();
 
 
 router.get('/', bloguploadercontrollrs.getBlog);
+router.get('/userblogs', bloguploadercontrollrs.getUserBlog);
 
 router.get('/:id', bloguploadercontrollrs.getBlogById);
 
