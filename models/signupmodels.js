@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose')
+//const Schema = mongoose.Schema;
 
-const signUpTemplate = new Schema({
+const signUpTemplate = new mongoose.Schema({
     firstName: {
         type: String,
         required: true
@@ -68,10 +68,15 @@ const signUpTemplate = new Schema({
     socialLinkLinkedin: {
         type: String
     },
+    photo: {
+        type: String
+    },
     date: {
         type: Date,
         default: Date.now
     }
 })
-const Signup = mongoose.model('pastStudents', signUpTemplate)
-module.exports = Signup;
+// const Signup = mongoose.model('pastStudents', signUpTemplate)
+// module.exports = Signup;
+
+module.exports = mongoose.model('pastStudents', signUpTemplate)
