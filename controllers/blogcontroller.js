@@ -22,6 +22,24 @@
      res.send(blog)
  }
 
+ //Get user articles
+ const getuserBlog = async(req, res, next) => {
+     const userId = req.query.Id
+     let blog;
+     try {
+         blog = await (await Blog.find({ firebaseId: userId }).sort({ createdAt: -1 }))
+
+
+     } catch (err) {
+         const error = new HttpError(
+             'Somethings went wrong,could not find data', 500
+         );
+         return next(error);
+     }
+     res.send(blog)
+ }
+
+
 
 
  //Read article
@@ -223,6 +241,7 @@
 
 
  exports.getBlog = getBlog;
+ exports.getuserBlog = getuserBlog;
  exports.getBlogById = getBlogById;
  exports.createBlog = createBlog;
  exports.updateBlog = updateBlog;

@@ -21,6 +21,7 @@ const upload = multer({ storage: storage });
 
 
 router.get('/Bloginterface', blogcontrollrs.getBlog);
+router.get('/blogprofile', blogcontrollrs.getuserBlog);
 
 router.get('/:id', blogcontrollrs.getBlogById);
 

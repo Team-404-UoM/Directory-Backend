@@ -2,11 +2,12 @@ const express = require('express');
 const bodyparser = require('body-parser');
 const mongoose = require('mongoose');
 
-//const Blog = require('./models/blog');
+//importing blog,forum & notification routes
 const blogRouters = require('./routes/blogroutes');
 const forumRouters = require('./routes/forumrouters');
 const bloguploaderRouters = require('./routes/bloguploaderroutes');
 const signUp = require('./routes/SignUp');
+const notificationRouters = require('./routes/notification');
 
 //importing event,gallery,jobs routes
 const events = require('./routes/events');
@@ -59,6 +60,7 @@ app.use('/Bloguploader', bloguploaderRouters);
 app.use(signUp);
 app.use(questions);
 app.use(profile);
+app.use('/notification', notificationRouters);
 
 
 app.use('/file', fileupload);

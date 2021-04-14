@@ -16,6 +16,22 @@ const getBlog = async(req, res, next) => {
     res.send(blog)
 }
 
+//get user uploaded blogs
+const getUserBlog = async(req, res, next) => {
+    const userId = req.query.Id
+    let blog;
+    try {
+        blog = await Bloguploader.find({ firebaseId: userId }).sort({ createdAt: -1 });
+
+    } catch (err) {
+        const error = new HttpError(
+            'Somethings went wrong,could not find data', 500
+        );
+        return next(error);
+    }
+    res.send(blog)
+}
+
 
 
 //get uniq blog
@@ -196,6 +212,7 @@ const decreasedislike = async(req, res) => {
 
 
 exports.getBlog = getBlog;
+exports.getUserBlog = getUserBlog
 exports.getBlogById = getBlogById;
 exports.createBlog = createBlog;
 exports.updateBlog = updateBlog;
