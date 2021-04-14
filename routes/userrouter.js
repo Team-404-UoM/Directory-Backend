@@ -5,4 +5,12 @@ const router = express.Router();
 
 router.get('/:id', usercontroller.getUserId);
 
+
+
+
+
+
+
+
+
 module.exports.router;
