@@ -4,9 +4,10 @@ const pastStudents = require('../models/signupmodels');
 
 const getUserId = async(req, res, next) => {
     const userId = req.params.id;
+    console.log(userId);
     let user;
     try {
-        user = await pastStudents.findById(userId);
+        user = await pastStudents.findOne({ firebaseUserId: userId });
     } catch (err) {
         const error = new HttpError(
             'Someting went wrong,could not find a place', 500
@@ -15,12 +16,7 @@ const getUserId = async(req, res, next) => {
 
 
     }
-    if (!user) {
-        const error = new HttpError('Could not find a place for the provided id', 404);
-
-        return next(error);
-    }
-    res.json({ user: user.toObject({ getters: true }) });
+    res.send(user)
 };
 
 exports.getUserId = getUserId;
