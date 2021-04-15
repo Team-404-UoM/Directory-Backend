@@ -17,6 +17,7 @@ const jobs = require('./routes/jobs');
 const questions = require('./routes/questionroutes');
 const fileupload = require('./routes/fileupload');
 const profile = require('./routes/directory');
+const user = require('./routes/userrouter');
 const firebaseAuth = require('./config/firebase_config');
 const HttpError = require('./models/httperror');
 const cors = require('cors');
@@ -60,6 +61,7 @@ app.use('/Bloguploader', bloguploaderRouters);
 app.use(signUp);
 app.use(questions);
 app.use(profile);
+app.use('/user', user);
 app.use('/notification', notificationRouters);
 
 
