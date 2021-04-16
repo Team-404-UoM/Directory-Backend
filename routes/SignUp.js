@@ -8,10 +8,11 @@ const HttpError = require('../models/httperror');
 
 const ACADEMIC = "ACADEMIC";
 const PAST_STUDENT = "PAST_STUDENT";
+const ADMIN = "ADMIN";
 
 router.post('/signup', async(request, response) => {
     const userType = request.query.type;
-    if (userType !== ACADEMIC && userType !== PAST_STUDENT) {
+    if (userType !== ACADEMIC && userType !== PAST_STUDENT && userType !== ADMIN) {
         console.error(userType);
         response.status(400).send("Type is incorret");
         return;
