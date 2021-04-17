@@ -3,11 +3,14 @@ const Notification = require('../models/notification');
 
 //create notificaton
 const createNotification = async(req, res, next) => {
-    const { NotificationType, ForumQuestion, UserId } = req.body;
+    const { NotificationType, Title, Message, OwnerUserId, OwnerfirebaseId, Date } = req.body;
     const createNotification = new Notification({
         NotificationType,
-        ForumQuestion,
-        UserId
+        Title,
+        Message,
+        OwnerUserId,
+        OwnerfirebaseId,
+        Date
 
     });
     try {
@@ -31,8 +34,8 @@ const getNotification = async(req, res, next) => {
 
     try {
         notification = await Notification.find({
-            UserId: userId
-        });
+            OwnerfirebaseId: userId
+        }).sort({ Date: -1 });
 
     } catch (err) {
         const error = new HttpError(
