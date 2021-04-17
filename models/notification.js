@@ -5,10 +5,16 @@ const notification = new Schema({
     NotificationType: {
         type: String,
     },
-    ForumQuestion: {
+    Title: {
         type: String
     },
-    UserId: {
+    Message: {
+        type: String
+    },
+    OwnerUserId: {
+        type: String
+    },
+    OwnerfirebaseId: {
         type: String
     },
     Date: {
