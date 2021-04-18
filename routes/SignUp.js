@@ -8,10 +8,11 @@ const HttpError = require('../models/httperror');
 
 const ACADEMIC = "ACADEMIC";
 const PAST_STUDENT = "PAST_STUDENT";
+const ADMIN = "ADMIN";
 
 router.post('/signup', async(request, response) => {
     const userType = request.query.type;
-    if (userType !== ACADEMIC && userType !== PAST_STUDENT) {
+    if (userType !== ACADEMIC && userType !== PAST_STUDENT && userType !== ADMIN) {
         console.error(userType);
         response.status(400).send("Type is incorret");
         return;
@@ -61,6 +62,18 @@ router.get('/users', async(request, response) => {
     const user = await signUpTemplateCopy.findOne({ firebaseUserId });
     response.status(200).send(user);
 })
+
+router.put('/users', async (req, res) => {
+    const socialLinkFB = req.body.socialLinkFB;
+
+    const firebaseUserId = req.user.uid;
+    await signUpTemplateCopy.update({ firebaseUserId}, {
+        $set: {socialLinkFB, 
+        // insert updated fields
+        }
+    });
+
+});
 
 router.get('/user/:id', (req, res) => {
     signUpTemplateCopy.findOne({ firebaseUserId: req.params.id })
