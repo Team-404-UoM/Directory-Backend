@@ -63,6 +63,18 @@ router.get('/users', async(request, response) => {
     response.status(200).send(user);
 })
 
+router.put('/users', async (req, res) => {
+    const socialLinkFB = req.body.socialLinkFB;
+
+    const firebaseUserId = req.user.uid;
+    await signUpTemplateCopy.update({ firebaseUserId}, {
+        $set: {socialLinkFB, 
+        // insert updated fields
+        }
+    });
+
+});
+
 router.get('/user/:id', (req, res) => {
     signUpTemplateCopy.findOne({ firebaseUserId: req.params.id })
         .then(results => res.send(results))

@@ -76,7 +76,5 @@ const signUpTemplate = new mongoose.Schema({
         default: Date.now
     }
 })
-const Signup = mongoose.model('pastStudents', signUpTemplate)
-module.exports = Signup;
 
-/* module.exports = mongoose.model('pastStudents', signUpTemplate) */
+module.exports = mongoose.model('pastStudents', signUpTemplate);
