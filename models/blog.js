@@ -53,6 +53,9 @@ const blogSchema = new Schema({
         type: String,
 
     },
+    userimage: {
+        type: String
+    },
     views: {
         type: Number,
         default: 0
@@ -64,7 +67,8 @@ const blogSchema = new Schema({
         userId: String,
         firebaseId: String,
         firstname: String,
-        lastname: String
+        lastname: String,
+        userimage: String
 
     }],
 

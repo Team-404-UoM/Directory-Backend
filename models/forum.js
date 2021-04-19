@@ -13,7 +13,8 @@ const forumSchema = new Schema({
         firebaseId: String,
         userId: String,
         firstname: String,
-        lastname: String
+        lastname: String,
+        userimage: String
 
     }],
     privacytype: {
@@ -35,6 +36,9 @@ const forumSchema = new Schema({
         type: String
     },
     userType: {
+        type: String
+    },
+    userimage: {
         type: String
     }
 }, { timestamps: true });

@@ -4,6 +4,7 @@ const multer = require("multer")
 const router = express.Router();
 //const Img = require('../models/imageUrl');
 const Img = require('../models/blog');
+const User = require('../models/signupmodels');
 
 
 
@@ -140,6 +141,19 @@ router.put('/upload/:id', upload.single('file'), (req, res) => {
         }
     })
 }) */
+
+
+router.put('/userupload/:id', upload.single('file'), (req, res) => {
+
+    User.updateOne({ "firebaseUserId": req.params.id }, {
+        $set: {
+            photo: req.file.filename
+        }
+    }).then(result => {
+        res.send('photo update');
+    })
+
+})
 
 
 router.post('/url', (req, res) => {

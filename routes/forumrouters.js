@@ -24,7 +24,8 @@ router.put('/reply/:id', (req, res) => {
         firebaseId: req.body.firebaseId,
         userId: req.body.userId,
         firstname: req.body.firstname,
-        lastname: req.body.lastname
+        lastname: req.body.lastname,
+        userimage: req.body.userimage
     }
 
     Forum.findOne({ "_id": req.params.id }).then((result) => {

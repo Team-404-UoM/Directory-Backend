@@ -53,6 +53,9 @@ const bloguploaderSchema = new Schema({
     categorie: {
         type: String,
     },
+    userimage: {
+        type: String
+    }
 
 }, { timestamps: true });
 const Bloguploader = mongoose.model('Bloguploader', bloguploaderSchema);

@@ -88,7 +88,7 @@ const getForumById = async(req, res, next) => {
 
 //create question
 const createForum = async(req, res, next) => {
-    const { message, reply, privacytype, faculty, firebaseId, userId, lastname, firstname, userType } = req.body;
+    const { message, reply, privacytype, faculty, firebaseId, userId, lastname, firstname, userType, userimage } = req.body;
     const createForum = new Forum({
         message,
         reply,
@@ -98,7 +98,8 @@ const createForum = async(req, res, next) => {
         firebaseId,
         lastname,
         firstname,
-        userType
+        userType,
+        userimage
     });
     try {
         await createForum.save();

@@ -62,7 +62,7 @@ const getBlogById = async(req, res, next) => {
 
 //create upload blog
 const createBlog = async(req, res, next) => {
-    const { title, image, url, like, categorie, firebaseId, firstname, lastname } = req.body;
+    const { title, image, url, like, categorie, firebaseId, firstname, lastname, userimage } = req.body;
     const createBlog = new Bloguploader({
         title,
         image,
@@ -71,7 +71,8 @@ const createBlog = async(req, res, next) => {
         categorie,
         firebaseId,
         firstname,
-        lastname
+        lastname,
+        userimage
     });
     try {
         await createBlog.save();
