@@ -64,11 +64,29 @@ router.get('/users', async(request, response) => {
 })
 
 router.put('/users', async (req, res) => {
+    //const firstName = req.body.firstName;
+   // const lastName = req.body.lastName;
+    const contactNumber = req.body.contactNumber;
+    const status = req.body.status;
+    const dob = req.body.dob;
+    //const experience = req.body.experience;
+    //const education = req.body.education;
+   // const workingPlace = req.body.workingPlace;
+   // const position = req.body.position;
     const socialLinkFB = req.body.socialLinkFB;
+    const socialLinkTwitter = req.body.socialLinkTwitter;
+    const socialLinkInsta = req.body.socialLinkInsta;
+    const socialLinkLinkedin = req.body.socialLinkLinkedin;
+
+
+
+
+
 
     const firebaseUserId = req.user.uid;
     await signUpTemplateCopy.update({ firebaseUserId}, {
-        $set: {socialLinkFB, 
+        $set: {socialLinkFB,socialLinkTwitter, socialLinkInsta,socialLinkLinkedin,contactNumber,
+            status,dob
         // insert updated fields
         }
     });
