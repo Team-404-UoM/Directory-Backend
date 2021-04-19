@@ -70,7 +70,7 @@
 
  //create article
  const createBlog = async(req, res, next) => {
-     const { title, body, like, categorie, firebaseId, firstname, lastname } = req.body;
+     const { title, body, like, categorie, firebaseId, firstname, lastname, userimage } = req.body;
      const createBlog = new Blog({
          title,
          body,
@@ -78,7 +78,8 @@
          categorie,
          firebaseId,
          firstname,
-         lastname
+         lastname,
+         userimage
 
 
      });
@@ -224,7 +225,8 @@
          userId: req.body.userId,
          firebaseId: req.body.firebaseId,
          firstname: req.body.firstname,
-         lastname: req.body.lastname
+         lastname: req.body.lastname,
+         userimage: req.body.userimage
 
      }
 
