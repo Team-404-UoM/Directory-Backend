@@ -4,23 +4,23 @@ const mongoose = require('mongoose')
 const signUpTemplate = new mongoose.Schema({
     firstName: {
         type: String,
-        required: true
+        required: false
     },
     firebaseUserId: {
         type: String,
-        required: true
+        required: false
     },
     lastName: {
         type: String,
-        required: true
+        required: false
     },
     type: {
         type: String,
-        required: true,
+        required: false,
     },
     faculty: {
         type: String,
-        required: true
+        required: false
     },
     Batch: {
         type: String,
@@ -77,4 +77,6 @@ const signUpTemplate = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('pastStudents', signUpTemplate);
+//module.exports = mongoose.model('pastStudents', signUpTemplate);
+const user = mongoose.model('pastStudents', signUpTemplate);
+module.exports = user;
