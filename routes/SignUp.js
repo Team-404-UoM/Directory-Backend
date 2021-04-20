@@ -63,33 +63,51 @@ router.get('/users', async(request, response) => {
     response.status(200).send(user);
 })
 
-router.put('/users', async (req, res) => {
-    //const firstName = req.body.firstName;
-   // const lastName = req.body.lastName;
+router.put('/users/:id', (req, res) => {
+
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
     const contactNumber = req.body.contactNumber;
     const status = req.body.status;
     const dob = req.body.dob;
-    //const experience = req.body.experience;
-    //const education = req.body.education;
-   // const workingPlace = req.body.workingPlace;
-   // const position = req.body.position;
+    const experience = req.body.experience;
+    const education = req.body.education;
+    const workingPlace = req.body.workingPlace;
+    const position = req.body.position;
     const socialLinkFB = req.body.socialLinkFB;
     const socialLinkTwitter = req.body.socialLinkTwitter;
     const socialLinkInsta = req.body.socialLinkInsta;
     const socialLinkLinkedin = req.body.socialLinkLinkedin;
 
+    console.log(status);
+    console.log(req.body.uid);
 
 
 
 
+    const firebaseUserId = req.params.id;
+    signUpTemplateCopy.updateOne({ "firebaseUserId": firebaseUserId }, {
+            $set: {
+                firstName: firstName,
+                lastName: lastName,
+                socialLinkFB: socialLinkFB,
+                socialLinkTwitter: socialLinkTwitter,
+                socialLinkInsta: socialLinkInsta,
+                socialLinkLinkedin: socialLinkLinkedin,
+                contactNumber: contactNumber,
+                status: status,
+                dob: dob,
+                position: [position],
+                education: [education],
+                workingplace: [workingPlace],
+                experience: [experience]
+                    // insert updated fields
+            }
+        }).then(res => {
+            res.send("Reply Updated");
 
-    const firebaseUserId = req.user.uid;
-    await signUpTemplateCopy.update({ firebaseUserId}, {
-        $set: {socialLinkFB,socialLinkTwitter, socialLinkInsta,socialLinkLinkedin,contactNumber,
-            status,dob
-        // insert updated fields
-        }
-    });
+        })
+        .catch(err => res.send(err))
 
 });
 
