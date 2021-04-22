@@ -63,7 +63,7 @@ const getUserForum = async(req, res, next) => {
 //get uniq question
 const getForumById = async(req, res, next) => {
     const forumId = req.params.id;
-
+    console.log(forumId);
 
     let forum;
     try {

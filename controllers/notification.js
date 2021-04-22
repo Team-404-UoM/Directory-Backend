@@ -47,6 +47,32 @@ const getNotification = async(req, res, next) => {
 
 }
 
+/* //delete notification
+const deleteNotification = async(req, res, next) => {
+    let notification;
+    const notificationId = req.params.id;
+    try {
+        notification = await Notification.findById(notificationId);
+    } catch (err) {
+        const error = new HttpError(
+            'Something went wrong,could not delete place', 500
+        );
+        return next(error);
+    }
+
+    try {
+        await notification.remove();
+    } catch (err) {
+        const error = new HttpError(
+            'Somethings went wrong,could not delete place.', 500
+        );
+        return next(error);
+    }
+
+    res.status(200).json({ message: 'Deletd place.' });
+} */
+
 
 exports.createNotification = createNotification;
 exports.getNotification = getNotification;
+/* exports.deleteNotification = deleteNotification; */
